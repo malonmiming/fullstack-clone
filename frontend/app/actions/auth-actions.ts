@@ -31,7 +31,7 @@ export async function signUp({
     });
 
     if (user) {
-      return { status: "ok" };
+      return { status: "ok",  };
     }
   } catch (err) {
     console.error(err);

@@ -11,13 +11,28 @@ export default function SigninPage() {
 
   // 실제 로그인할 때 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  
     e.preventDefault();
+    
 
-    signIn("credentials", {
+    if (!email || !password) {
+      alert("이메일과 비밀번호를 모두 입력해주세요.");
+      return;
+    }
+
+    const result = await signIn("credentials", {
       email,
       password,
       redirectTo: "/",
-    });
+      //redirect: false,
+    },);
+
+    // if (result?.error) {
+    //   alert("로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.");
+    // } else {
+    //   window.location.href = "/";
+    //   alert("로그인에 성공 ");
+    // }
   };
 
   return (
