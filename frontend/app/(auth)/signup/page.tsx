@@ -33,7 +33,10 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-4 bg-violet-50">
+    <div className="flex flex-col items-center justify-center h-screen gap-4" style={{ 
+    background: `linear-gradient(90deg, #fadbfb  20px, transparent 1%) center, 
+              linear-gradient(#fadbfb  20px, transparent 1%) center, 
+              white;`,backgroundSize: '22px 22px'}}>
       <div className="flex flex-col items-center justify-center border-1 border-t-gray-10 bg-white min-w-[400px] min-h-[580px] rounded-xl shadow-xl">
         <h1 className="bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-3xl font-extrabold text-transparent pb-3">회원가입</h1>
         <p className="text-gray-500 pb-8">인프런에서 다양한 학습의 기회를 얻으세요</p>
