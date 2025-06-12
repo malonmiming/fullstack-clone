@@ -33,52 +33,54 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-4">
-      <h1 className="text-3xl font-bold">회원가입</h1>
-      <p className="text-gray-700">인프런에서 다양한 학습의 기회를 얻으세요</p>
+    <div className="flex flex-col items-center justify-center h-screen gap-4 bg-violet-50">
+      <div className="flex flex-col items-center justify-center border-1 border-t-gray-10 bg-white min-w-[400px] min-h-[580px] rounded-xl shadow-xl">
+        <h1 className="bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-3xl font-extrabold text-transparent pb-3">회원가입</h1>
+        <p className="text-gray-500 pb-8">인프런에서 다양한 학습의 기회를 얻으세요</p>
 
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-2 min-w-[300px]"
-      >
-        <label htmlFor="email">이메일</label>
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          name="email"
-          placeholder="example@inflab.com"
-          className="border-2 border-gray-300 rounded-sm p-2"
-        />
-        <label htmlFor="password">비밀번호</label>
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          name="password"
-          placeholder="example@inflab.com"
-          className="border-2 border-gray-300 rounded-sm p-2"
-        />
-        <label htmlFor="passwordConfirm">비밀번호 확인</label>
-        <input
-          value={passwordConfirm}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-          type="password"
-          name="passwordConfirm"
-          placeholder="example@inflab.com"
-          className="border-2 border-gray-300 rounded-sm p-2"
-        />
-
-        <button
-          type="submit"
-          className="bg-green-500 text-white font-bold cursor-pointer rounded-sm p-2"
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-2 min-w-[300px]"
         >
-          회원가입
-        </button>
-        <Link href="/signin" className="text-center">
-          로그인
-        </Link>
-      </form>
+          <label htmlFor="email" className="text-xs text-violet-500">이메일</label>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            name="email"
+            placeholder="example@inflab.com"
+            className="bg-gray-100 border-2 border-gray-300 focus:border-blue-500 focus:bg-white rounded-sm p-2"
+          />
+          <label htmlFor="password" className="text-xs text-violet-500">비밀번호</label>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            name="password"
+            placeholder="비밀번호를 입력해주세요"
+            className="bg-gray-100 border-2 border-gray-300 focus:border-blue-500 focus:bg-white rounded-sm p-2"
+          />
+          <label htmlFor="passwordConfirm" className="text-xs text-violet-500">비밀번호 확인</label>
+          <input
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            type="password"
+            name="passwordConfirm"
+            placeholder="비밀번호를 입력해주세요"
+            className="bg-gray-100 border-2 border-gray-300 focus:border-blue-500 focus:bg-white rounded-sm p-2"
+          />
+
+          <button
+            type="submit"
+            className="bg-violet-500 text-white font-bold border-blue-700 cursor-pointer rounded-sm p-3 text-shadow-xs text-shadow-violet-700 mt-8"
+          >
+            회원가입
+          </button>
+          <Link href="/signin"  className="text-center text-violet-500">
+            로그인
+          </Link>
+        </form>
+      </div>
     </div>
   );
 }
