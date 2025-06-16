@@ -55,7 +55,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
-
+  //사용자 정보(이메일, 이름, 프로필 이미지 등)를 저장하며, 여러 Account 및 Session과 연결.
   @@map("users")
 }
 

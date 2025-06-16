@@ -60,15 +60,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
     strategy: "jwt",
   },
-  // jwt: {
-	// 	encode: async ({ token, secret }) => {
-	// 		return jwt.sign(token as jwt.JwtPayload, secret as string);
-	// 	},
-	// 	decode: async ({ token, secret }) => {
-	// 		return jwt.verify(token as string, secret as string) as 
-	// 		JWT;
-	// 	},
-	// },
+  jwt: {
+		encode: async ({ token, secret }) => {
+			return jwt.sign(token as jwt.JwtPayload, secret as string);
+		},
+		decode: async ({ token, secret }) => {
+			return jwt.verify(token as string, secret as string) as 
+			JWT;
+		},
+	},
   // jwt: {
   //   encode: async ({ token, secret }) => {
   //     if (!secret) throw new Error("Missing secret");
@@ -87,16 +87,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   //     return payload as JWT;
   //   },
   // },
-  jwt: { 
-    encode: async ({ token, secret }) => { 
-      const encodedSecret = new TextEncoder().encode(secret as string); 
-      return await new SignJWT(token as JWTPayload).setProtectedHeader({ alg: 'HS256' }).setIssuedAt().setExpirationTime('1h').sign(encodedSecret); 
-    }, 
-    decode: async ({ token, secret }) => { 
-      const encodedSecret = new TextEncoder().encode(secret as string); 
-      const { payload } = await jwtVerify(token!, encodedSecret); return payload as JWT; 
-    }, 
-  },
+  // jwt: { 
+  //   encode: async ({ token, secret }) => { 
+  //     const encodedSecret = new TextEncoder().encode(secret as string); 
+  //     return await new SignJWT(token as JWTPayload).setProtectedHeader({ alg: 'HS256' }).setIssuedAt().setExpirationTime('1h').sign(encodedSecret); 
+  //   }, 
+  //   decode: async ({ token, secret }) => { 
+  //     const encodedSecret = new TextEncoder().encode(secret as string); 
+  //     const { payload } = await jwtVerify(token!, encodedSecret); return payload as JWT; 
+  //   }, 
+  // },
   pages: {},
   callbacks: {},
 });

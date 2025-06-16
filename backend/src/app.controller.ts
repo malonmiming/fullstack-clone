@@ -22,14 +22,10 @@ export class AppController {
     return this.appService.getHello();
   }
   @Get('user-test')
-    @UseGuards(AccessTokenGuard)
-    @ApiBearerAuth('access-token')
+    @UseGuards(AccessTokenGuard) //AccessTokenGuard를 사용하여 접근을 제한.
+    @ApiBearerAuth('access-token') //@ApiBearerAuth('access-token')을 추가하여 Swagger 문서에서 인증이 필요하다는 것을 명시.
     testUser(@Req() req: Request) {
-      console.log("req.user::", req.user);
-      if(req.statusCode === 401) {
-         console.log("error::", req.user);
-         alert("error");
-      }
-      return 'test completed';
+      console.log(req.user);
+      return `유저 이메일: ${req.user?.email}`;
     }
 }
