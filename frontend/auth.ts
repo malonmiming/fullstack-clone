@@ -5,7 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { comparePassword } from "./lib/password-utils"; 
 import * as jwt from "jsonwebtoken";
 import { JWT } from "next-auth/jwt";
-import {SignJWT, jwtVerify, JWTPayload} from 'jose';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   useSecureCookies: process.env.NODE_ENV === "production",
@@ -47,8 +46,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const passwordMatch = comparePassword(
           credentials.password as string,
           user.hashedPassword as string
+          
         );
-
+       
         if (!passwordMatch) {
           throw new Error("비밀번호가 일치하지 않습니다.");
         }
@@ -69,34 +69,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 			JWT;
 		},
 	},
-  // jwt: {
-  //   encode: async ({ token, secret }) => {
-  //     if (!secret) throw new Error("Missing secret");
-  //     return await new SignJWT(token as any)
-  //       .setProtectedHeader({ alg: "HS256" })
-  //       .setIssuedAt()
-  //       .setExpirationTime("1h")
-  //       .sign(new TextEncoder().encode(secret as string));
-  //   },
-  //   decode: async ({ token, secret }) => {
-  //     if (!token || !secret) return null;
-  //     const { payload } = await jwtVerify(
-  //       token,
-  //       new TextEncoder().encode(secret as string)
-  //     );
-  //     return payload as JWT;
-  //   },
-  // },
-  // jwt: { 
-  //   encode: async ({ token, secret }) => { 
-  //     const encodedSecret = new TextEncoder().encode(secret as string); 
-  //     return await new SignJWT(token as JWTPayload).setProtectedHeader({ alg: 'HS256' }).setIssuedAt().setExpirationTime('1h').sign(encodedSecret); 
-  //   }, 
-  //   decode: async ({ token, secret }) => { 
-  //     const encodedSecret = new TextEncoder().encode(secret as string); 
-  //     const { payload } = await jwtVerify(token!, encodedSecret); return payload as JWT; 
-  //   }, 
-  // },
+
   pages: {},
   callbacks: {},
 });

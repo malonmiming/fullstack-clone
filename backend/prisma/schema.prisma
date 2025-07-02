@@ -6,7 +6,12 @@
 
 generator client {
   provider = "prisma-client-js"
-  //output   = "../generated/prisma"
+}
+
+generator prismaClassGenerator {
+  provider               = "prisma-class-generator"
+  dryRun                 = "false"
+  separateRelationFields = "false"
 }
 
 datasource db {
@@ -15,18 +20,18 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -54,15 +59,15 @@ model User {
   image          String?
   bio            String?
 
-  accounts Account[]
-  sessions Session[]
-  courses Course[]
+  accounts          Account[]
+  sessions          Session[]
+  courses           Course[]
   courseEnrollments CourseEnrollment[]
-  courseReviews CourseReview[]
-  courseQuestions CourseQuestion[]
-  courseComments   CourseComment[]
+  courseReviews     CourseReview[]
+  courseQuestions   CourseQuestion[]
+  courseComments    CourseComment[]
   lectureActivities LectureActivity[]
-  //사용자 정보(이메일, 이름, 프로필 이미지 등)를 저장하며, 여러 Account 및 Session과 연결.
+
   @@map("users")
 }
 
@@ -85,20 +90,21 @@ model Course {
   price            Int      @default(0)
   discountPrice    Int?     @map("discount_price")
   level            String   @default("BEGINEER")
+  // status           String   @default("DRAFT")
+  status       CourseStatus @default(DRAFT)
   instructorId     String   @map("instructor_id")
-  isPublished      Boolean  @default(false) @map("is_published")
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
-  
-  sections Section[]
-  lectures Lecture[]
-  category CourseCategory[]
-  courseEnrollments CourseEnrollment[]
-  instructor  User               @relation(fields: [instructorId], references: [id])
-  courseReviews     CourseReview[]
-  courseQuestions   CourseQuestion[]
 
-  @@map("courses") //데이터베이스 테이블 이름을 "courses"로 변경
+  sections    Section[]
+  lectures    Lecture[]
+  categories  CourseCategory[]
+  enrollments CourseEnrollment[]
+  instructor  User               @relation(fields: [instructorId], references: [id])
+  reviews     CourseReview[]
+  questions   CourseQuestion[]
+
+  @@map("courses")
 }
 
 model Section {
@@ -109,7 +115,7 @@ model Section {
   courseId    String   @map("course_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
-  
+
   course   Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   lectures Lecture[]
 
@@ -192,7 +198,7 @@ model CourseQuestion {
 
   course   Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
   user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  courseComments CourseComment[]
+  comments CourseComment[]
 
   @@map("course_questions")
 }
@@ -205,7 +211,7 @@ model CourseComment {
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
-  courseQuestions CourseQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  question CourseQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
   user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("course_comments")
@@ -224,4 +230,10 @@ model LectureActivity {
 
   @@unique([userId, lectureId])
   @@map("lecture_activities")
+}
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }

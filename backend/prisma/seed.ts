@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
+import * as bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -82,6 +83,19 @@ async function main() {
     data: categories,
   });
 
+  const hashedPassword = await bcrypt.hash('test', 10); // 'test'를 해시
+
+  await prisma.user.upsert({
+    where: { email: 'test@email.com' },
+    update: {},
+    create: {
+      email: 'test@email.com',
+      hashedPassword: hashedPassword,
+      name: '테스트 유저',
+    },
+  });
+  const users = await prisma.user.findMany();
+  console.log("users::",users);
   console.log('카테고리 시드 데이터가 성공적으로 생성되었습니다.');
 }
 
